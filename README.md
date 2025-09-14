@@ -8,52 +8,51 @@ C♭ intends to maintain C’s capacity for low-level programming while streamli
 
 # Specifications
 
-## Design Targets
+## Design Choices
 
-  1. Runtime speed over compile speed
+  1. Priority on runtime speed
 
-  2. Zero-cost abstractions (no hidden allocations or loops)
+  2. Zero-cost abstraction
 
-  3. Improved string handling compared to C
-
-  4. No garbage collection; safety via ownership and borrowing à la Rust
+  3. No garbage collection; safety via intelligent memory management akin to Rust
    
 ## Components of Types
 
   - Fields: Values of variables inside of objects (exclusive to objects)
 
-  - Properties: Values relating to types themselves; Compile time constants for all types. Exceptions: Manually declared objects, arrays (including strings)
+  - Properties: Values relating to types themselves; Compile time constants for all types. Exceptions: Runtime/manually declared objects, arrays (including strings).
 
   - Methods: Modify values inside of objects and/or return values based on contents. Arguments are constant, and said arguments rely on fields within scope of the object
+  <!-- this could change later on, but for now this will be this way for simplicity and focus on using functions instead -->
 
 ## Types
 
 ### 1. Default Types
 
-  - Fixed sizes and alignments (`byte`/`sbyte`/`ushort`/`short`/`uint`/`int`/`float`/`double`/`bool` etc.)
+  - C-like types (`byte`/`sbyte`/`uint`/`int`/`float`/`double`/`bool` etc.)
 
-  - Properties like `size` are compile-time constants and cannot be modified
+  - Possess few properties like `size`, which are compile-time constants and cannot be modified
    
-  - Non-nullable by default, can be made nullable via `type?` (sentinel value; n amount of checks where n = bits in type) or via `type??` (null bit; cuts range in half), depending on requirements/usage
+  - Nullable by default, can be forced nullable via `type?` (sentinel value; n amount of checks where n = bits in type) or via `type??` (null bit; cuts range in half; optimal for larger data types), depending on requirements/usage. Non-nullability can be forced by using `type!` and will default to 0 if not defined.
 
 
 ### 2. Arrays
 
-  - Immutable by default, mutable when precise capacity is declared.
+  - Immutable defined via literal array, mutable when defined via precise capacity.
 
    #### Properties
   - `size` (memory usage in bytes)
    
   - `capacity` (total indices)
    
-  - `stride` (size of the type of the array; space between the beginnings of indices)
+  - `stride` (size of the type of the array (returns type.size); space between the beginnings of indices)
 
    #### Methods
   - `arr.count()` (shorthand for `std.array.count(arr)`, returns total non-`null` indices)
 
 ### 3. Strings
 
-  - `string` is an immutable type that is not nullable and requires assignment
+  - `string` is an immutable type that is nullable (null byte) and requires assignment
 
   - `string<N>` is mutable, fixed-capacity
 
@@ -134,17 +133,7 @@ TODO -->
 
     - Prevents data races, use-after-free, and mutation during reads. -->
 
-## Pipeline
-
-  - Interface pass reads header files (`.hb`) first:
-
-    - Defines object sizes/alignments and header field order.
-
-  - Type-check <!-- and borrow-check  -->using the interface table.
-
-  - Monomorphize templates; lower no-arg methods to functions that read ephemeral frames.
-
-  - Optimize aggressively; generate machine code that translates abstractions into optimized code.
+## Examples
 
 ```cs
 using std
