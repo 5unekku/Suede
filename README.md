@@ -31,7 +31,7 @@ C♭ intends to maintain C’s capacity for low-level programming while streamli
 
   - C-like types (`byte`/`sbyte`/`uint`/`int`/`float`/`double`/`bool` etc.)
 
-  - Possess few properties like `size`, which are compile-time constants and cannot be modified
+  - Possess few properties like `size`, which are universal constants and cannot be modified
    
   - Nullable by default, can be forced nullable via `type?` (sentinel value; n amount of checks where n = bits in type) or via `type??` (null bit; cuts range in half; optimal for larger data types), depending on requirements/usage. Non-nullability can be forced by using `type!` and will default to 0 if not defined.
 
