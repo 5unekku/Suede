@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv) {
   llvm::LLVMContext ctx;
-  llvm::Module mod("cb-test", ctx);
-  std::cout << "C♭ compiler skeleton is alive!\n";
+  llvm::Module mod("suede-test", ctx);
+  std::cout << "Suede compiler skeleton is alive!\n";
   return 0;
 }

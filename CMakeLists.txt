@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project (cb LANGUAGES C CXX)
+project (suede LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -13,10 +13,10 @@ include(AddLLVM)
 include_directories(${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 
-add_executable(cb
+add_executable(suede
   src/main.cpp
   src/runtime/runtime.c
 )
 
-target_include_directories(cb PRIVATE src src/runtime)
-target_link_libraries(cb PRIVATE LLVM)
+target_include_directories(suede PRIVATE src src/runtime)
+target_link_libraries(suede PRIVATE LLVM)

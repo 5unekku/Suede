@@ -1,4 +1,4 @@
-# C♭/Cb (C Flat) Programming Language License
+# Suede Programming Language License
 
 **Copyright © 2025 @5unekku**. All rights reserved.
 
@@ -11,13 +11,13 @@ This software is licensed under the **GNU Lesser General Public License v3.0**, 
 ### 1. Attribution
 Any program that uses or distributes this software (in source or binary form) must include the following attribution in a prominent place in its documentation and/or user interface where acknowledgements are displayed:
 
-> Powered by the C♭ Programming Language (© 2025 @5unekku)
+> Powered by the Suede Programming Language (© 2025 @5unekku)
 
 ### 2. Compilation Restriction
-The C♭ compiler, runtime, and standard library may not be incorporated into proprietary software in compiled form without also releasing the full corresponding source code of the incorporated C♭ components under this license.  
+The Suede compiler, runtime, and standard library may not be incorporated into proprietary software in compiled form without also releasing the full corresponding source code of the incorporated Suede components under this license.  
 
-- Proprietary programs may link to C♭ as a separate library (dynamic or static).  
-- Modifications to C♭ itself (compiler, runtime, standard library) must remain licensed under these same terms (LGPLv3 with Attribution).
+- Proprietary programs may link to Suede as a separate library (dynamic or static).  
+- Modifications to Suede itself (compiler, runtime, standard library) must remain licensed under these same terms (LGPLv3 with Attribution).
 
 ---
 ```

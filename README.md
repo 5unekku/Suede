@@ -1,44 +1,27 @@
-# C♭/Cb (C Flat)
+# Suede
 
-C♭ is a language designed as a successor C, focused on zero-cost abstractions and quality-of-life improvements, similar to [Rust](https://github.com/rust-lang/rust), while maintaining the core of C.
+Suede is a language designed as a successor C, C++ and Rust, focused on zero-cost abstractions, quality-of-life improvements, and pretty, easy to read syntax, while maintaining the core of C.
 
 It preserves low-level control while reducing boilerplate and introducing modern language features.
 
-C♭ intends to maintain C’s capacity for low-level programming while streamlining development through time-efficient abstractions and modern syntax, and introduced streamlined safe memory management from Rust.
+Suede intends to maintain C’s capacity for low-level programming, C++'s capacity for streamlined development via efficient abstractions and modernized syntax, and Rust's compile time safe memory management.
 
 # Specifications
-
-## Design Choices
-
-  1. Priority on runtime speed
-
-  2. Zero-cost abstraction
-
-  3. No garbage collection; safety via intelligent memory management akin to Rust
    
-## Components of Types
-
-  - Fields: Values of variables inside of objects (exclusive to objects)
-
-  - Properties: Values relating to types themselves; Compile time constants for all types. Exceptions: Runtime/manually declared objects, arrays (including strings).
-
-  - Methods: Modify values inside of objects and/or return values based on contents. Arguments are constant, and said arguments rely on fields within scope of the object
-  <!-- this could change later on, but for now this will be this way for simplicity and focus on using functions instead -->
-
 ## Types
 
 ### 1. Default Types
 
-  - C-like types (`byte`/`sbyte`/`uint`/`int`/`float`/`double`/`bool` etc.)
+  - C-like types (`(u)int`/`float`/`bool` etc. + derivatives)
 
-  - Possess few properties like `size`, which are universal constants and cannot be modified
+  - Possess minimal properties like `size` (object-oriented alternative to `sizeof(type)`), which are compile time constants and cannot be modified
    
-  - Nullable by default, can be forced nullable via `type?` (sentinel value; n amount of checks where n = bits in type) or via `type??` (null bit; cuts range in half; optimal for larger data types), depending on requirements/usage. Non-nullability can be forced by using `type!` and will default to 0 if not defined.
+  - Non-nullable by default, can be forced nullable via `type?` (sentinel value; n amount of checks where n = bits in type). Will default to 0 if not defined.
 
 
 ### 2. Arrays
 
-  - Immutable defined via literal array, mutable when defined via precise capacity.
+  - Immutable, contents mutable.
 
    #### Properties
   - `size` (memory usage in bytes)
@@ -52,11 +35,9 @@ C♭ intends to maintain C’s capacity for low-level programming while streamli
 
 ### 3. Strings
 
-  - `string` is an immutable type that is nullable (null byte) and requires assignment
+  - `string` is an immutable type that is non-nullable and requires assignment
 
-  - `string<N>` is mutable, fixed-capacity
-
-  - `char[N]` is identical to `string<N>` in C♭, as is `char[]` and `string`
+  - `string<N>` is mutable, fixed-capacity.
    
   - Same properties and methods of Arrays. `std.string.count(str)` aliased to `std.array.count(str)`
 
@@ -67,6 +48,8 @@ C♭ intends to maintain C’s capacity for low-level programming while streamli
   - `struct` functionality is wrapped into `object`s; `object`s can simply exclude methods for identical functionality
 
   - Instances have no runtime header beyond fields
+  
+  - Fields: Values of variables inside of objects (exclusive to objects)
 
 #### Fields
 
@@ -138,28 +121,37 @@ TODO -->
 ```cs
 using std
 // strings
-string<64> str = "Hello, World!"; // 64 characters
-byte st = s.Count();   // no-arg method reads staged property
-assert(st == ok);
+string<64> str1 = "Hello, World!"; // 64 characters long
+string str2 = "Hello, World!"; // 13 characters long, immutable, will create a new string when redefined
+string str3; // invalid, compilation error
 
 // arrays
-int[8] a = { 1, 2, 3, 4};
-print(a.length);    // returns 4
-print(a.capacity);  // returns 8
+int[8] a = { 1, 2, 3, 4 };
+print(a.count()); // returns 4
+print(a.capacity); // returns 8
+
+int[] a = { 1, 2, 3, 4 };
+print(a.count()); // returns 4
+print(a.capacity); // returns 4
 
 // overloads
-object image [string name, byte x, byte y];
-object image [string name, ushort x, ushort y];
+object image {
+  (string name, byte x, byte y);
+  (string name, ushort x, ushort y);
+}
 
-image a = ["wendy.jpg", 200, 200];            // first overload if types fit
-image b = ["wendy.jpg", 500, 500];            // falls through to u16/u16
-image c = ["wendy.jpg", (ushort) 200, 200];   // explicit cast forces second
-image d = ["wendy.jpg", (ushort), (ushort)];  // type casting allowed even with no input if properties are nullable
+image a = ("wendy.jpg", 200, 200);            // first overload if types fit
+image b = ("wendy.jpg", 500, 500);            // falls through to u16/u16
+image c = ("wendy.jpg", (ushort) 200, 200);   // explicit cast forces second
+image d = ("wendy.jpg", (ushort), (ushort));  // type casting allowed even with no input if properties are nullable
 
 // overloads 2
-object image [string name, ushort x, ushort y];
-object image [string name, byte x, byte y];
+object image (string name, ushort x, ushort y);
+object image (string name, byte x, byte y);
 
-image a = ["wendy.jpg", 200, 200];  // successfully fits into ushort (declared first), so it is declared as such.
-image b = ["wendy.jpg", 500, 500];  // also declares as ushort (correctly).
+image a = ("wendy.jpg", 200, 200);  // successfully fits into ushort (declared first), so it is declared as such.
+image b = ("wendy.jpg", 500, 500);  // also declares as ushort (correctly).
+
+// manual declaration
+object a = {"wendy.jpg", 1000, 500};
 ```
