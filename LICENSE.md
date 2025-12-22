@@ -5,7 +5,7 @@ Copyright © 2025 @5unekku.
 This software is licensed under the Apache License v2.0 with LLVM Exceptions.
 
 ---
-```
+```plaintext
 ==============================================================================
 The LLVM Project is under the Apache License v2.0 with LLVM Exceptions:
 ==============================================================================

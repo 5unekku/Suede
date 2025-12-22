@@ -1,1 +1,76 @@
+# build directories
 build
+build/
+cmake-build-*/
+
+# llvm/clang build artifacts
+*.bc
+*.ll
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+
+# ide and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# compiler output
+*.out
+*.s
+*.obj
+*.pdb
+*.ilk
+
+# test outputs
+*.test
+test_output/
+
+# coverage and profiling
+*.gcda
+*.gcno
+*.gcov
+coverage/
+*.profdata
+*.profraw
+
+# package manager
+.cache/
+*.egg-info/
+__pycache__/
+*.pyc
+
+# os files
+Thumbs.db
+Desktop.ini
+
+# cmake
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+cmake_install.cmake
+install_manifest.txt
+
+# ninja
+.ninja_deps
+.ninja_log
+
+# make
+*.d
+*.dep
+
+# llvm
+compile_commands.json
+*.td.inc
+*GenRegisterInfo.inc
+*GenInstrInfo.inc
+*GenAsmWriter.inc
+*GenAsmMatcher.inc
+*GenDAGISel.inc
+*GenCallingConv.inc
+*GenSubtargetInfo.inc
